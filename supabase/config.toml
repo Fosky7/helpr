@@ -1,0 +1,6 @@
+# Supabase configuration file
+# For detailed reference see https://supabase.com/docs/reference/local-development/config
+
+[auth.email]
+# Disable email confirmation to allow immediate login after signup.
+enable_confirmations = false

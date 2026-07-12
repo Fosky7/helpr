@@ -1,0 +1,7 @@
+@import "./index.css";
+
+/*
+  Compatibility entrypoint for parts of the app or tooling that still import
+  src/styles.css directly. The Renderr visual system lives in index.css so the
+  palette, semantic tokens, and reusable utilities stay centralized.
+*/
