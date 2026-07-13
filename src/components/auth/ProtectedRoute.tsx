@@ -1,24 +1,25 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Spinner } from '@/components/ui/spinner';
 
-export function ProtectedRoute() {
-  const { user, loading = false } = useAuth();
-  const location = useLocation();
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
 
-  if (loading) {
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         <Spinner className="h-8 w-8" />
-        <p className="ml-3 text-muted-foreground">Verifying session…</p>
       </div>
     );
   }
 
   if (!user) {
-    // Redirect to login and remember where they wanted to go
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />;
+  return <>{children}</>;
 }

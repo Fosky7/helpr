@@ -1,41 +1,41 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from '@/contexts/AuthContext';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import Home from '@/pages/Home';
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import Dashboard from '@/pages/Dashboard';
-import Profile from '@/pages/Profile';
 import Campaigns from '@/pages/Campaigns';
 import CampaignView from '@/pages/CampaignView';
+import Profile from '@/pages/Profile';
 import ProjectStatus from '@/pages/ProjectStatus';
-import ForgotPassword from "@/pages/ForgotPassword";
+import UserMenu from "@/components/layout/UserMenu";
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/fundraisers/:slug" element={<CampaignView />} />
-        <Route path="/status" element={<ProjectStatus />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/status" element={<ProjectStatus />} />
+          <Route path="/fundraisers/:slug" element={<CampaignView />} />
+          <Route path="/auth" element={<Navigate to="/login" replace />} />
 
-        {/* Protected routes – only accessible when authenticated */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/campaigns" element={<Campaigns />} />
-          <Route path="/campaigns/new" element={<div>Create Campaign Page</div>} /> {/* Replace with actual CreateCampaign component */}
-          <Route path="/campaigns/:id" element={<CampaignView />} />
-          <Route path="/campaigns/:id/edit" element={<div>Edit Campaign Page</div>} /> {/* Replace with actual EditCampaign component */}
-        </Route>
+          {/* Protected routes */}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/campaigns" element={<ProtectedRoute><Campaigns /></ProtectedRoute>} />
+          <Route path="/campaigns/:campaignId" element={<ProtectedRoute><CampaignView /></ProtectedRoute>} />
+          <Route path="/campaigns/:campaignId/edit" element={<ProtectedRoute><div>Edit Campaign (placeholder)</div></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
 
-        {/* 404 fallback */}
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="*" element={<div className="p-8 text-center text-muted-foreground">Page not found</div>} />
-      </Routes>
-    </BrowserRouter>
+          {/* Fallback */}
+        <Route path="/user-menu" element={<UserMenu />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
-
-export default App;

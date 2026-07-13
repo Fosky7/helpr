@@ -71,13 +71,7 @@ export function SignupForm({ onLoginClick }: SignupFormProps) {
     if (!mountedRef.current) return
 
     if (signUpError) {
-      const errorMsg = signUpError.toLowerCase()
-      if (errorMsg.includes('already registered') || errorMsg.includes('unique') || errorMsg.includes('duplicate')) {
-        setError('This email is already registered. Please log in instead.')
-        setFieldErrors({ email: 'Already registered' })
-      } else {
-        setError(signUpError)
-      }
+      setError(signUpError)
       setLoading(false)
       return
     }
