@@ -2,6 +2,8 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { SonnerToaster } from '@/components/ui/sonner';
+import * as Sheet from '@/components/ui/sheet';
+import * as DropdownMenu from '@/components/ui/dropdown-menu';
 
 import Home from '@/pages/Home';
 import Auth from '@/pages/Auth';
@@ -40,12 +42,40 @@ function App() {
           <Route path="/fundraisers" element={<PublicCampaigns />} />
           <Route path="/fundraisers/:slug" element={<CampaignView />} />
           <Route path="/status" element={<Status />} />
-        <Route path="/src-doc" element={<SrcDoc />} />
-        <Route path="/project-status" element={<ProjectStatus />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/src-doc" element={<SrcDoc />} />
+          <Route path="/project-status" element={<ProjectStatus />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <SonnerToaster />
+
+        <div style={{ position: 'fixed', bottom: 16, right: 16, display: 'flex', gap: 8, zIndex: 50 }}>
+          <Sheet.Sheet>
+            <Sheet.SheetTrigger asChild>
+              <button type="button">Open Sheet</button>
+            </Sheet.SheetTrigger>
+            <Sheet.SheetContent>
+              <div style={{ padding: 16 }}>
+                <h3>Sheet Wired</h3>
+                <p>This is a wired Sheet component.</p>
+                <Sheet.SheetClose asChild>
+                  <button type="button">Close</button>
+                </Sheet.SheetClose>
+              </div>
+            </Sheet.SheetContent>
+          </Sheet.Sheet>
+          <DropdownMenu.DropdownMenu>
+            <DropdownMenu.DropdownMenuTrigger asChild>
+              <button type="button">Menu</button>
+            </DropdownMenu.DropdownMenuTrigger>
+            <DropdownMenu.DropdownMenuContent align="end">
+              <DropdownMenu.DropdownMenuLabel>Wired Menu</DropdownMenu.DropdownMenuLabel>
+              <DropdownMenu.DropdownMenuSeparator />
+              <DropdownMenu.DropdownMenuItem>Item 1</DropdownMenu.DropdownMenuItem>
+              <DropdownMenu.DropdownMenuItem>Item 2</DropdownMenu.DropdownMenuItem>
+            </DropdownMenu.DropdownMenuContent>
+          </DropdownMenu.DropdownMenu>
+        </div>
       </Router>
     </AuthProvider>
   );
