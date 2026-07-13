@@ -21,6 +21,7 @@ function App() {
 
         {/* Protected routes – only accessible when authenticated */}
         <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/campaigns" element={<Campaigns />} />
@@ -28,9 +29,6 @@ function App() {
           <Route path="/campaigns/:id" element={<CampaignView />} />
           <Route path="/campaigns/:id/edit" element={<div>Edit Campaign Page</div>} /> {/* Replace with actual EditCampaign component */}
         </Route>
-
-        {/* Default redirect to dashboard (or home) */}
-        <Route path="/" element={<Dashboard />} /> {/* You may replace with Home or redirect */}
 
         {/* 404 fallback */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
