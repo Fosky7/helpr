@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
 import { Skeleton } from '@/components/ui/skeleton'
 import DeleteAccountDialog from '@/components/profile/DeleteAccountDialog'
+import { cardPrimary, cardInner } from '@/lib/styles'
 
 interface ProfileRecord {
   id: string
@@ -269,7 +270,7 @@ const Profile = () => {
   if (loading) {
     return (
       <AppShell centered maxWidthClassName="max-w-3xl" aria-label="Profile loading">
-        <Card className="overflow-hidden border-primary/20 bg-card/90 shadow-xl shadow-primary/10 backdrop-blur">
+        <Card className={`${cardPrimary} overflow-hidden`}>
           <CardHeader className="p-6 sm:p-8">
             <Skeleton className="h-8 w-48 rounded-xl" />
             <Skeleton className="mt-2 h-4 w-96 rounded-xl" />
@@ -291,16 +292,16 @@ const Profile = () => {
   if (!profile) {
     return (
       <AppShell centered maxWidthClassName="max-w-md" aria-label="Profile error">
-        <Card className="border-destructive/40 bg-destructive/10 shadow-sm">
-          <CardContent className="p-8 text-center">
+        <Card className="rounded-3xl border-destructive/40 bg-destructive/10 shadow-xl shadow-destructive/10 backdrop-blur">
+          <CardContent className="p-6 text-center sm:p-8">
             <BrandMark compact size="lg" className="mx-auto mb-4" />
-            <h2 className="text-xl font-bold">Profile not found</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <h2 className="text-xl font-bold tracking-tight">Profile not found</h2>
+            <p className="mt-2 text-sm text-muted-foreground text-pretty">
               We could not load your profile. Please try refreshing or contact support.
             </p>
             <Button 
               variant="outline" 
-              className="mt-6 rounded-xl" 
+              className="mt-6 min-h-10 rounded-xl" 
               onClick={() => window.location.reload()}
             >
               Refresh
@@ -315,7 +316,7 @@ const Profile = () => {
     <AppShell centered maxWidthClassName="max-w-3xl" aria-label="Profile settings">
       <div className="space-y-6">
         {/* Profile Details Card */}
-        <Card className="overflow-hidden border-primary/20 bg-card/90 shadow-xl shadow-primary/10 backdrop-blur transition-all hover:shadow-2xl hover:shadow-primary/20">
+        <Card className={`${cardPrimary} overflow-hidden transition-all hover:shadow-2xl hover:shadow-primary/20`}>
           <CardHeader className="relative overflow-hidden border-b border-border bg-muted/30 p-6 sm:p-8">
             <div className="absolute right-6 top-6 hidden gap-2 sm:flex" aria-hidden="true">
               <span className="h-2.5 w-10 rounded-full bg-primary" />
@@ -330,8 +331,8 @@ const Profile = () => {
                   <div className="mb-3 inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary shadow-sm">
                     Account identity
                   </div>
-                  <CardTitle className="text-3xl tracking-tight">Make your Renderr profile shine.</CardTitle>
-                  <CardDescription className="mt-3 max-w-2xl text-sm leading-6">
+                  <CardTitle className="text-3xl font-bold tracking-tight">Make your Renderr profile shine.</CardTitle>
+                  <CardDescription className="mt-3 max-w-2xl text-sm leading-6 text-pretty">
                     Manage your public profile information and keep your Renderr account recognizable across your fundraising workspace.
                   </CardDescription>
                 </div>
@@ -343,7 +344,7 @@ const Profile = () => {
             <CardContent className="space-y-6 p-6 sm:p-8">
               <section className="grid gap-6 lg:grid-cols-[1fr_0.85fr]" aria-label="Profile details">
                 <div className="space-y-6">
-                  <div className="space-y-2 rounded-3xl border border-border bg-background/70 p-5 shadow-sm">
+                  <div className={`${cardInner} space-y-2 p-6`}>
                     <Label htmlFor="fullName" className="text-sm font-semibold">Full Name</Label>
                     <Input
                       id="fullName"
@@ -361,43 +362,43 @@ const Profile = () => {
                         {nameError}
                       </p>
                     )}
-                    <p className="text-xs leading-5 text-muted-foreground">
+                    <p className="text-xs leading-5 text-muted-foreground text-pretty">
                       This is the name supporters and collaborators can recognize in Renderr.
                     </p>
                   </div>
 
-                  <div className="rounded-3xl border border-primary/15 bg-primary/5 p-5 shadow-sm">
+                  <div className={`${cardInner} p-6`}>
                     <Label className="text-sm font-semibold">Email</Label>
                     <p className="mt-2 break-all text-sm font-medium text-foreground">{user?.email}</p>
-                    <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                    <p className="mt-2 text-xs leading-5 text-muted-foreground text-pretty">
                       Your email is managed through the existing secure Supabase authentication flow.
                     </p>
                   </div>
                 </div>
 
-                <aside className="rounded-3xl border border-border bg-muted/30 p-5 shadow-sm" aria-label="Profile avatar">
+                <aside className={`${cardInner} p-6`} aria-label="Profile avatar">
                   <Label className="text-sm font-semibold">Avatar</Label>
                   {profile.avatar_url ? (
-                    <div className="mt-4 flex flex-col items-center rounded-2xl border border-primary/15 bg-card/80 p-5 text-center">
+                    <div className="mt-4 flex flex-col items-center rounded-2xl border border-primary/15 bg-card/80 p-6 text-center">
                       <img
                         src={profile.avatar_url}
                         alt="Your avatar"
                         className="h-24 w-24 rounded-full border border-primary/20 object-cover shadow-lg shadow-primary/10"
                       />
                       <p className="mt-4 text-sm font-medium">Avatar connected</p>
-                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground text-pretty">
                         Your profile image is ready for a colorful Renderr presence.
                       </p>
                     </div>
                   ) : (
-                    <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-primary/30 bg-card/80 p-5 text-center">
+                    <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-primary/30 bg-card/80 p-6 text-center">
                       <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-primary shadow-inner ring-1 ring-primary/20">
                         <span className="text-3xl font-black" aria-hidden="true">
                           {(fullName.trim() || user?.email || 'R').charAt(0).toUpperCase()}
                         </span>
                       </div>
                       <p className="mt-4 text-sm font-semibold">No avatar yet</p>
-                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground text-pretty">
                         Your Renderr profile is ready for future personalization with a bright avatar state today.
                       </p>
                       <div className="mx-auto mt-4 flex w-fit gap-2" aria-hidden="true">
@@ -413,7 +414,7 @@ const Profile = () => {
 
             <CardFooter className="flex flex-col-reverse gap-3 border-t border-border bg-muted/20 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
               <BackNavigation fallbackTo="/dashboard" label="Back" />
-              <Button type="submit" disabled={saving} className="w-full rounded-xl bg-primary shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 sm:w-auto" aria-busy={saving}>
+              <Button type="submit" disabled={saving} className="min-h-10 w-full rounded-xl bg-primary shadow-lg shadow-primary/20 transition-all hover:bg-primary/90 sm:w-auto" aria-busy={saving}>
                 {saving ? <><Spinner className="mr-2 h-4 w-4" /> Saving...</> : 'Save Changes'}
               </Button>
             </CardFooter>
@@ -421,10 +422,10 @@ const Profile = () => {
         </Card>
 
         {/* Change Password Card */}
-        <Card className="overflow-hidden border-primary/20 bg-card/90 shadow-xl shadow-primary/10 backdrop-blur transition-all hover:shadow-2xl hover:shadow-primary/20">
+        <Card className={`${cardPrimary} overflow-hidden transition-all hover:shadow-2xl hover:shadow-primary/20`}>
           <CardHeader className="p-6 sm:p-8">
             <CardTitle className="text-2xl font-bold tracking-tight">Change Password</CardTitle>
-            <CardDescription>
+            <CardDescription className="text-pretty">
               Update your password to keep your account secure.
             </CardDescription>
           </CardHeader>
@@ -459,7 +460,7 @@ const Profile = () => {
                         />
                       </div>
                       <p className="mt-1 text-xs font-medium text-muted-foreground">{strength.feedback || 'Too short'}</p>
-                      <p className="mt-1 text-xs text-muted-foreground">
+                      <p className="mt-1 text-xs text-muted-foreground text-pretty">
                         Use at least {MIN_PASSWORD_LENGTH} characters with a mix of uppercase, numbers, and symbols for a strong password.
                       </p>
                     </div>
@@ -487,7 +488,7 @@ const Profile = () => {
               </div>
             </CardContent>
             <CardFooter className="border-t border-border bg-muted/20 p-6 sm:p-8">
-              <Button type="submit" disabled={changingPassword} className="rounded-xl shadow-lg shadow-primary/20" aria-busy={changingPassword}>
+              <Button type="submit" disabled={changingPassword} className="min-h-10 rounded-xl shadow-lg shadow-primary/20" aria-busy={changingPassword}>
                 {changingPassword ? (
                   <>
                     <Spinner className="mr-2 h-4 w-4" />
@@ -502,10 +503,10 @@ const Profile = () => {
         </Card>
 
         {/* Avatar Upload Card */}
-        <Card className="overflow-hidden border-primary/20 bg-card/90 shadow-xl shadow-primary/10 backdrop-blur transition-all hover:shadow-2xl hover:shadow-primary/20">
+        <Card className={`${cardPrimary} overflow-hidden transition-all hover:shadow-2xl hover:shadow-primary/20`}>
           <CardHeader className="p-6 sm:p-8">
             <CardTitle className="text-2xl font-bold tracking-tight">Upload Avatar</CardTitle>
-            <CardDescription>
+            <CardDescription className="text-pretty">
               Choose an image to represent your profile. Max size 5MB, images only.
             </CardDescription>
           </CardHeader>
@@ -534,7 +535,7 @@ const Profile = () => {
                     </p>
                   </div>
                   {uploading && (
-                    <div className="overflow-hidden rounded-full bg-muted h-2">
+                    <div className="overflow-hidden rounded-full bg-muted h-2 w-full">
                       <div
                         className="h-full bg-primary rounded-full transition-all duration-300"
                         style={{ width: `${uploadProgress}%` }}
@@ -549,7 +550,7 @@ const Profile = () => {
             <Button 
               onClick={handleAvatarUpload} 
               disabled={!avatarFile || uploading} 
-              className="rounded-xl shadow-lg shadow-primary/20 transition-all hover:bg-primary/90" 
+              className="min-h-10 rounded-xl shadow-lg shadow-primary/20 transition-all hover:bg-primary/90" 
               aria-busy={uploading}
             >
               {uploading ? (
@@ -563,17 +564,17 @@ const Profile = () => {
         </Card>
 
         {/* Danger zone: delete account */}
-        <Card className="overflow-hidden border-destructive/30 bg-card/90 shadow-xl shadow-destructive/10 backdrop-blur">
+        <Card className={`${cardPrimary} border-destructive/30 shadow-xl shadow-destructive/10`}>
           <CardHeader className="p-6 sm:p-8">
             <CardTitle className="text-2xl font-bold tracking-tight text-destructive">Danger Zone</CardTitle>
-            <CardDescription>
+            <CardDescription className="text-pretty">
               Once you delete your account, there is no going back. Please be certain.
             </CardDescription>
           </CardHeader>
           <CardContent className="p-6 sm:p-8">
             <Button
               variant="destructive"
-              className="rounded-xl"
+              className="min-h-10 rounded-xl"
               onClick={() => setDeleteDialogOpen(true)}
             >
               Delete my account

@@ -17,6 +17,9 @@ import CampaignEdit from '@/pages/CampaignEdit';
 import PublicCampaigns from '@/pages/PublicCampaigns';
 import Status from '@/pages/Status';
 import NotFound from '@/pages/NotFound';
+import SrcDoc from "@/pages/SrcDoc";
+import ProjectStatus from "@/pages/ProjectStatus";
+import ForgotPassword from "@/pages/ForgotPassword";
 
 function App() {
   return (
@@ -37,6 +40,9 @@ function App() {
           <Route path="/fundraisers" element={<PublicCampaigns />} />
           <Route path="/fundraisers/:slug" element={<CampaignView />} />
           <Route path="/status" element={<Status />} />
+        <Route path="/src-doc" element={<SrcDoc />} />
+        <Route path="/project-status" element={<ProjectStatus />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <SonnerToaster />

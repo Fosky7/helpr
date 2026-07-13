@@ -7,16 +7,16 @@ import { Card } from '@/components/ui/card'
 export default function Home() {
   return (
     <AppShell centered maxWidthClassName="max-w-6xl" background="celebration" contentClassName="gap-10">
-      <section aria-labelledby="hero-title" className="relative flex flex-col items-center text-center">
-        <div className="pointer-events-none absolute -top-20 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
-        <div className="pointer-events-none absolute right-0 top-10 h-64 w-64 rounded-full bg-accent/20 blur-3xl" aria-hidden="true" />
+      <section aria-labelledby="hero-title" className="relative flex flex-col items-center text-center overflow-hidden">
+        <div className="pointer-events-none absolute -top-20 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl hidden sm:block" aria-hidden="true" />
+        <div className="pointer-events-none absolute right-0 top-10 h-64 w-64 rounded-full bg-accent/20 blur-3xl hidden sm:block" aria-hidden="true" />
 
         <div className="relative z-10 flex flex-col items-center gap-6">
           <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary shadow-sm">
             Colorful creative fundraising
           </div>
 
-          <h1 id="hero-title" className="text-balance text-5xl font-bold tracking-tight sm:text-6xl">
+          <h1 id="hero-title" className="text-balance break-words text-4xl font-bold tracking-tight sm:text-5xl">
             Bring your campaign to life with <span className="text-primary">Renderr</span>
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
