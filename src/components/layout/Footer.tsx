@@ -1,35 +1,19 @@
-import React from 'react';
-import FooterWrapper from './Footer/FooterWrapper';
-import FooterColumn from './Footer/FooterColumn';
-import FooterLink from './Footer/FooterLink';
-import SocialLinks from './Footer/SocialLinks';
-import NewsletterForm from './Footer/NewsletterForm';
-import FooterBottom from './Footer/FooterBottom';
+import { Link } from 'react-router-dom'
 
-const Footer: React.FC = () => {
+export default function Footer() {
   return (
-    <FooterWrapper>
-      <div className="grid gap-8 md:grid-cols-3">
-        <div className="space-y-4">
-          <h3 className="text-lg font-bold text-primary">Renderr</h3>
-          <p className="text-sm leading-6 text-muted-foreground">
-            Colorful fundraising for everyone.
-          </p>
-          <SocialLinks />
+    <footer className="border-t border-primary/20 bg-card/90 py-8 backdrop-blur">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6">
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
+          <Link to="/" className="inline-flex min-h-10 items-center text-sm font-semibold text-primary hover:underline">Home</Link>
+          <Link to="/fundraisers" className="inline-flex min-h-10 items-center text-sm font-semibold text-primary hover:underline">Fundraisers</Link>
+          <Link to="/status" className="inline-flex min-h-10 items-center text-sm font-semibold text-primary hover:underline">Status</Link>
+          <Link to="/privacy" className="inline-flex min-h-10 items-center text-sm font-semibold text-primary hover:underline">Privacy</Link>
         </div>
-        <FooterColumn title="Product">
-          <FooterLink href="/status">Status</FooterLink>
-          <FooterLink href="/campaigns">Campaigns</FooterLink>
-        </FooterColumn>
-        <FooterColumn title="Company">
-          <FooterLink href="/about">About</FooterLink>
-          <FooterLink href="/contact">Contact</FooterLink>
-        </FooterColumn>
+        <p className="text-sm text-muted-foreground">
+          &copy; {new Date().getFullYear()} Renderr. All rights reserved.
+        </p>
       </div>
-      <NewsletterForm />
-      <FooterBottom />
-    </FooterWrapper>
-  );
-};
-
-export default Footer;
+    </footer>
+  )
+}
