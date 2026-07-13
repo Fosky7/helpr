@@ -1,88 +1,96 @@
-import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
-import { toast } from 'sonner'
-import { supabase } from '@/integrations/supabase/client'
-import AppShell from '@/components/layout/AppShell'
-import BrandMark from '@/components/brand/BrandMark'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { cardPrimary } from '@/lib/styles'
+import { useState, type FormEvent } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
+import AppShell from '@/components/layout/AppShell';
+import BrandMark from '@/components/brand/BrandMark';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { cardPrimary } from '@/lib/styles';
 
-const ForgotPasswordPage = () => {
-  const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [sent, setSent] = useState(false)
+export default function ForgotPassword() {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { resetPassword } = useAuth();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setLoading(true)
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/update-password`,
-      })
-      if (error) throw error
-      setSent(true)
-      toast.success('Password reset email sent! Check your inbox.')
-    } catch (error: any) {
-      toast.error(error.message || 'An unexpected error occurred.')
-    } finally {
-      setLoading(false)
+    e.preventDefault();
+
+    if (!email.trim()) {
+      toast.error('Please enter your email address.');
+      return;
     }
-  }
+
+    setLoading(true);
+    const { error } = await resetPassword(email.trim());
+    setLoading(false);
+
+    if (error) {
+      toast.error(error.message || 'An unexpected error occurred.');
+    } else {
+      setSuccess(true);
+      toast.success('Check your email for the password reset link.');
+    }
+  };
 
   return (
-    <AppShell centered maxWidthClassName="max-w-md" aria-label="Forgot password">
+    <AppShell centered maxWidthClassName="max-w-md" aria-label="Forgot password page">
       <Card className={`${cardPrimary} overflow-hidden`}>
         <CardHeader className="relative border-b border-primary/20 bg-gradient-to-br from-primary/15 via-accent/30 to-card p-6">
-          <BrandMark subtitle="Reset password" className="mb-4" />
-          <CardTitle className="text-2xl tracking-tight">Trouble logging in?</CardTitle>
+          <BrandMark subtitle="Reset your password" className="mb-4" />
+          <CardTitle className="text-2xl tracking-tight">Forgot your password?</CardTitle>
           <CardDescription>
             Enter your email and we'll send you a link to reset your password.
           </CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
+        {success ? (
           <CardContent className="space-y-4 p-6">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                disabled={loading || sent}
-                className="h-11 rounded-xl border-primary/20 bg-card/80"
-              />
-            </div>
+            <p className="text-sm text-muted-foreground">
+              If an account with that email exists, we've sent a password reset link. Please check your inbox
+              and follow the instructions.
+            </p>
+            <Button asChild className="w-full rounded-xl shadow-lg shadow-primary/20">
+              <Link to="/login">Back to login</Link>
+            </Button>
           </CardContent>
-          <CardFooter className="flex flex-col gap-4 border-t border-primary/20 bg-muted/20 p-6">
-            {sent ? (
-              <p className="text-sm text-muted-foreground text-center">
-                Check your email for the reset link. Didn't receive it? Check spam or try again.
-              </p>
-            ) : (
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <CardContent className="space-y-4 p-6">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={loading}
+                  className="h-11 rounded-xl border-primary/20 bg-card/80"
+                />
+              </div>
+            </CardContent>
+            <CardFooter className="flex flex-col gap-4 border-t border-primary/20 bg-muted/20 p-6">
               <Button
                 type="submit"
                 className="w-full rounded-xl shadow-lg shadow-primary/20"
                 disabled={loading}
               >
-                {loading ? 'Sending...' : 'Send reset link'}
+                {loading ? 'Sending reset link...' : 'Send reset link'}
               </Button>
-            )}
-            <Link
-              to="/auth?mode=login"
-              className="text-sm font-semibold text-primary hover:underline text-center"
-            >
-              Back to log in
-            </Link>
-          </CardFooter>
-        </form>
+              <p className="text-sm text-center text-muted-foreground">
+                Remember your password?{' '}
+                <Link to="/login" className="font-semibold text-primary hover:underline">
+                  Log in
+                </Link>
+              </p>
+            </CardFooter>
+          </form>
+        )}
       </Card>
     </AppShell>
-  )
+  );
 }
-
-export default ForgotPasswordPage
