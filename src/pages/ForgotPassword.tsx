@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { cardPrimary } from '@/lib/styles'
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('')
@@ -33,7 +34,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <AppShell centered maxWidthClassName="max-w-md" aria-label="Forgot password">
-      <Card className="overflow-hidden border-primary/20 bg-card/90 shadow-xl shadow-primary/10 backdrop-blur">
+      <Card className={`${cardPrimary} overflow-hidden`}>
         <CardHeader className="relative border-b border-primary/20 bg-gradient-to-br from-primary/15 via-accent/30 to-card p-6">
           <BrandMark subtitle="Reset password" className="mb-4" />
           <CardTitle className="text-2xl tracking-tight">Trouble logging in?</CardTitle>

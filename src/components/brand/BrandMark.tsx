@@ -1,107 +1,87 @@
-import type { HTMLAttributes, ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import type { HTMLAttributes } from 'react'
 
 type BrandMarkSize = 'sm' | 'md' | 'lg'
 
-interface BrandMarkProps extends HTMLAttributes<HTMLDivElement> {
-  compact?: boolean
-  title?: string
+type BrandMarkProps = HTMLAttributes<HTMLDivElement> & {
   subtitle?: string
+  compact?: boolean
   size?: BrandMarkSize
-  to?: string
-  trailing?: ReactNode
 }
 
-const sizeClasses: Record<BrandMarkSize, { mark: string; letter: string; title: string; subtitle: string }> = {
+const sizeStyles: Record<BrandMarkSize, { mark: string; title: string; subtitle: string; gap: string }> = {
   sm: {
-    mark: 'h-10 w-10 rounded-xl',
-    letter: 'text-base',
-    title: 'text-sm',
-    subtitle: 'text-xs',
+    mark: 'h-9 w-9 rounded-2xl',
+    title: 'text-lg',
+    subtitle: 'text-[0.68rem]',
+    gap: 'gap-2.5',
   },
   md: {
-    mark: 'h-12 w-12 rounded-2xl',
-    letter: 'text-lg',
-    title: 'text-sm',
+    mark: 'h-11 w-11 rounded-2xl',
+    title: 'text-xl',
     subtitle: 'text-xs',
+    gap: 'gap-3',
   },
   lg: {
-    mark: 'h-14 w-14 rounded-2xl',
-    letter: 'text-xl',
-    title: 'text-base',
+    mark: 'h-14 w-14 rounded-3xl',
+    title: 'text-2xl',
     subtitle: 'text-sm',
+    gap: 'gap-4',
   },
 }
 
-function joinClasses(...classes: Array<string | false | null | undefined>) {
+function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(' ')
 }
 
-function BrandMarkContent({
-  compact,
-  title,
-  subtitle,
-  size,
-  trailing,
-}: Pick<BrandMarkProps, 'compact' | 'title' | 'subtitle' | 'size' | 'trailing'>) {
-  const classes = sizeClasses[size ?? 'md']
+export default function BrandMark({ subtitle, compact = false, size = 'md', className, ...props }: BrandMarkProps) {
+  const styles = sizeStyles[size]
 
   return (
-    <>
+    <div className={cx('inline-flex min-w-0 items-center', styles.gap, className)} {...props}>
       <div
-        className={joinClasses(
-          'relative flex shrink-0 items-center justify-center overflow-hidden bg-primary text-primary-foreground shadow-lg shadow-primary/25 ring-1 ring-primary/20',
-          classes.mark,
+        className={cx(
+          'relative flex shrink-0 items-center justify-center overflow-hidden border border-primary/25 bg-gradient-to-br from-primary via-primary to-accent text-primary-foreground shadow-lg shadow-primary/20 ring-1 ring-background/60',
+          styles.mark,
         )}
+        aria-hidden="true"
       >
-        <span className="absolute inset-0 bg-accent/20" aria-hidden="true" />
-        <span className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-accent ring-2 ring-card" aria-hidden="true" />
-        <span className={joinClasses('relative z-10 font-black tracking-tight', classes.letter)} aria-hidden="true">
-          R
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-foreground/25 via-transparent to-background/15" />
+        <div className="absolute -right-3 -top-3 h-7 w-7 rounded-full bg-primary-foreground/25 blur-md" />
+        <div className="absolute -bottom-3 -left-3 h-8 w-8 rounded-full bg-background/20 blur-md" />
+
+        <svg className="relative z-10 h-[62%] w-[62%] drop-shadow-sm" viewBox="0 0 64 64" role="img" aria-label="Renderr logo mark">
+          <path
+            d="M18 49V15h17.5c7.8 0 13.3 4.8 13.3 11.9 0 5.1-2.9 9-7.3 10.7L51 49H39.6l-8.1-10.2h-3.2V49H18Zm10.3-18.7h6.4c2.5 0 4.1-1.3 4.1-3.4s-1.6-3.4-4.1-3.4h-6.4v6.8Z"
+            fill="currentColor"
+          />
+          <path
+            d="M14 17.5c0-3 2.5-5.5 5.5-5.5H36"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth="4"
+            opacity="0.72"
+          />
+          <path
+            d="M46.5 13.5 49 19l5.5 2.5L49 24l-2.5 5.5L44 24l-5.5-2.5L44 19l2.5-5.5Z"
+            fill="currentColor"
+            opacity="0.9"
+          />
+        </svg>
+      </div>
+
+      {compact ? (
+        <span className="sr-only">Renderr</span>
+      ) : (
+        <span className="min-w-0 leading-none">
+          <span className={cx('block truncate font-black tracking-tight text-foreground', styles.title)}>Renderr</span>
+          {subtitle ? (
+            <span className={cx('mt-1 block truncate font-semibold uppercase tracking-[0.18em] text-muted-foreground', styles.subtitle)}>
+              {subtitle}
+            </span>
+          ) : null}
         </span>
-      </div>
-
-      <div className="min-w-0">
-        <p className={joinClasses('font-semibold leading-none tracking-tight text-primary', classes.title)}>{title}</p>
-        {!compact ? <p className={joinClasses('mt-1 truncate text-muted-foreground', classes.subtitle)}>{subtitle}</p> : null}
-      </div>
-
-      {trailing ? <div className="ml-auto">{trailing}</div> : null}
-    </>
-  )
-}
-
-export function BrandMark({
-  compact = false,
-  title = 'Renderr',
-  subtitle = 'Colorful creator workspace',
-  size = 'md',
-  to,
-  trailing,
-  className,
-  ...props
-}: BrandMarkProps) {
-  const rootClassName = joinClasses('flex items-center gap-3', className)
-
-  if (to) {
-    return (
-      <Link
-        to={to}
-        className={joinClasses(
-          rootClassName,
-          'rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-        )}
-      >
-        <BrandMarkContent compact={compact} title={title} subtitle={subtitle} size={size} trailing={trailing} />
-      </Link>
-    )
-  }
-
-  return (
-    <div className={rootClassName} {...props}>
-      <BrandMarkContent compact={compact} title={title} subtitle={subtitle} size={size} trailing={trailing} />
+      )}
     </div>
   )
 }
-
-export default BrandMark

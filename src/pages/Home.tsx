@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import AppShell from '@/components/layout/AppShell'
+import HomeHeader from '@/components/layout/HomeHeader'
 import Footer from '@/components/layout/Footer'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -7,16 +8,18 @@ import { Card } from '@/components/ui/card'
 export default function Home() {
   return (
     <AppShell centered maxWidthClassName="max-w-6xl" background="celebration" contentClassName="gap-10">
-      <section aria-labelledby="hero-title" className="relative flex flex-col items-center text-center">
-        <div className="pointer-events-none absolute -top-20 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
-        <div className="pointer-events-none absolute right-0 top-10 h-64 w-64 rounded-full bg-accent/20 blur-3xl" aria-hidden="true" />
+      <HomeHeader />
+
+      <section aria-labelledby="hero-title" className="relative flex flex-col items-center overflow-hidden pt-2 text-center sm:pt-4">
+        <div className="pointer-events-none absolute -top-20 left-1/2 hidden h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl sm:block" aria-hidden="true" />
+        <div className="pointer-events-none absolute right-0 top-10 hidden h-64 w-64 rounded-full bg-accent/20 blur-3xl sm:block" aria-hidden="true" />
 
         <div className="relative z-10 flex flex-col items-center gap-6">
           <div className="inline-flex rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary shadow-sm">
             Colorful creative fundraising
           </div>
 
-          <h1 id="hero-title" className="text-balance text-5xl font-bold tracking-tight sm:text-6xl">
+          <h1 id="hero-title" className="text-balance break-words text-4xl font-bold tracking-tight sm:text-5xl">
             Bring your campaign to life with <span className="text-primary">Renderr</span>
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
@@ -24,7 +27,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col items-center gap-3 sm:flex-row">
-            <Button asChild size="lg" className="rounded-xl shadow-lg shadow-primary/20 px-8">
+            <Button asChild size="lg" className="rounded-xl px-8 shadow-lg shadow-primary/20">
               <Link to="/auth?mode=signup">Start a fundraiser</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="rounded-xl bg-background/70 px-8">
@@ -37,7 +40,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="grid gap-6 md:grid-cols-3" aria-labelledby="features-title">
+      <section id="features" className="grid scroll-mt-28 gap-6 md:grid-cols-3" aria-labelledby="features-title">
         <h2 id="features-title" className="sr-only">Key features</h2>
         <Card className="relative overflow-hidden border-primary/20 bg-card/90 p-6 shadow-xl shadow-primary/10 backdrop-blur">
           <div className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-primary/15 blur-2xl" />

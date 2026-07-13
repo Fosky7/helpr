@@ -11,6 +11,7 @@ import CampaignStatusBadge, { type CampaignStatus } from '@/components/campaigns
 import type { ManagedCampaign } from '@/components/campaigns/CampaignCard'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { cardPrimary, cardInner } from '@/lib/styles'
 
 function toFormValues(campaign: ManagedCampaign): CampaignFormValues {
   return {
@@ -140,7 +141,7 @@ export default function CampaignEdit() {
   if (loading) {
     return (
       <AppShell centered maxWidthClassName="max-w-md" aria-label="Loading campaign">
-        <Card className="border-primary/20 bg-card/90 text-center shadow-xl shadow-primary/10 backdrop-blur">
+        <Card className={`${cardPrimary} text-center`}>
           <CardContent className="p-8 text-sm text-muted-foreground" aria-busy="true">
             Loading campaign editor...
           </CardContent>
@@ -152,11 +153,11 @@ export default function CampaignEdit() {
   if (!campaign) {
     return (
       <AppShell centered maxWidthClassName="max-w-md" aria-label="Campaign not found">
-        <Card className="border-destructive/40 bg-card/90 text-center shadow-xl shadow-primary/10 backdrop-blur">
+        <Card className={`${cardPrimary} border-destructive/40 text-center`}>
           <CardContent className="space-y-4 p-8">
             <BrandMark compact size="lg" className="justify-center" />
             <h1 className="text-2xl font-bold tracking-tight">Campaign not found</h1>
-            <p className="text-sm leading-6 text-muted-foreground">
+            <p className="text-sm leading-6 text-muted-foreground text-pretty">
               {apiError || 'This campaign could not be loaded or you do not have access to edit it.'}
             </p>
             <Button asChild className="rounded-xl shadow-lg shadow-primary/20">
@@ -174,7 +175,7 @@ export default function CampaignEdit() {
   return (
     <AppShell maxWidthClassName="max-w-5xl" aria-label="Edit campaign">
       <div className="space-y-6">
-        <nav className="flex flex-col gap-4 rounded-3xl border border-primary/20 bg-card/85 p-5 shadow-xl shadow-primary/10 backdrop-blur sm:flex-row sm:items-center sm:justify-between" aria-label="Edit campaign navigation">
+        <nav className={`${cardPrimary} flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8`} aria-label="Edit campaign navigation">
           <Link to="/campaigns" className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
             <BrandMark subtitle="Edit campaign" />
           </Link>
@@ -195,10 +196,11 @@ export default function CampaignEdit() {
           title={campaign.title || 'Untitled campaign'}
           description="Refine the campaign story, goal, and public details. Publish when it is ready or archive it when the fundraiser is complete."
           headingLevel={1}
+          align="left"
           actions={<CampaignStatusBadge status={campaign.status} />}
         />
 
-        <Card className="overflow-hidden border-primary/20 bg-card/90 shadow-2xl shadow-primary/10 backdrop-blur">
+        <Card className={`${cardPrimary} overflow-hidden`}>
           <CampaignForm
             mode="edit"
             key={campaign.id + campaign.updated_at}

@@ -32,9 +32,12 @@ const alignClasses: Record<ColorfulSectionHeaderAlign, string> = {
 }
 
 /**
- * A reusable Renderr section hero/header treatment built only from app design tokens.
- * It keeps page logic flexible by accepting arbitrary actions/children while centralizing
- * the colorful background, badge, icon, and typography patterns used across the app.
+ * Canonical page header pattern for Renderr.
+ *
+ * A reusable, design-token‑driven hero/header treatment that provides a
+ * colorful background, optional icon, eyebrow badge, title, description,
+ * actions and children.  Use this component as the standard page header
+ * across the application to maintain visual consistency.
  */
 const ColorfulSectionHeader = React.forwardRef<HTMLElement, ColorfulSectionHeaderProps>(
   (
@@ -62,7 +65,7 @@ const ColorfulSectionHeader = React.forwardRef<HTMLElement, ColorfulSectionHeade
       <Component
         ref={ref}
         className={cn(
-          'relative overflow-hidden rounded-3xl border border-primary/20 bg-card/90 p-6 text-foreground shadow-xl shadow-primary/10 backdrop-blur sm:p-8',
+          'relative overflow-hidden rounded-3xl border border-primary/20 bg-card/90 p-6 text-foreground shadow-2xl shadow-primary/10 backdrop-blur sm:p-8',
           className,
         )}
         {...props}

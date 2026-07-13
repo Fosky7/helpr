@@ -82,30 +82,30 @@ export default function PublicCampaigns() {
   return (
     <AppShell maxWidthClassName="max-w-7xl" contentClassName="space-y-8" aria-label="Public Renderr fundraisers">
       <header className="flex flex-col gap-4 rounded-3xl border border-primary/20 bg-card/85 p-5 shadow-xl shadow-primary/10 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
-        <Link to="/" className="rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+        <Link to="/" className="min-h-10 rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
           <BrandMark subtitle="Public fundraisers" />
         </Link>
 
         <nav className="flex flex-col gap-2 sm:flex-row sm:items-center" aria-label="Fundraiser navigation">
           <BackNavigation fallbackTo="/" />
-          <Button asChild variant="outline" className="rounded-xl bg-background/70">
+          <Button asChild variant="outline" className="min-h-10 rounded-xl bg-background/70">
             <Link to="/">Home</Link>
           </Button>
           {isAuthenticated ? (
             <>
-              <Button asChild variant="outline" className="rounded-xl bg-background/70">
+              <Button asChild variant="outline" className="min-h-10 rounded-xl bg-background/70">
                 <Link to="/dashboard">Dashboard</Link>
               </Button>
-              <Button asChild className="rounded-xl shadow-lg shadow-primary/20">
+              <Button asChild className="min-h-10 rounded-xl shadow-lg shadow-primary/20">
                 <Link to="/campaigns/new">Create Campaign</Link>
               </Button>
             </>
           ) : (
             <>
-              <Button asChild variant="outline" className="rounded-xl bg-background/70">
+              <Button asChild variant="outline" className="min-h-10 rounded-xl bg-background/70">
                 <Link to="/auth?mode=login">Log in</Link>
               </Button>
-              <Button asChild className="rounded-xl shadow-lg shadow-primary/20">
+              <Button asChild className="min-h-10 rounded-xl shadow-lg shadow-primary/20">
                 <Link to="/auth?mode=signup">Start a fundraiser</Link>
               </Button>
             </>
@@ -120,11 +120,11 @@ export default function PublicCampaigns() {
         description="Browse published Renderr fundraisers with colorful campaign cards, clear progress indicators, and direct paths to learn more about each mission."
         actions={
           isAuthenticated ? (
-            <Button asChild className="rounded-xl shadow-lg shadow-primary/20">
+            <Button asChild className="min-h-10 rounded-xl shadow-lg shadow-primary/20">
               <Link to="/campaigns/new">Create a campaign</Link>
             </Button>
           ) : (
-            <Button asChild className="rounded-xl shadow-lg shadow-primary/20">
+            <Button asChild className="min-h-10 rounded-xl shadow-lg shadow-primary/20">
               <Link to="/auth?mode=signup">Create your fundraiser</Link>
             </Button>
           )
@@ -148,7 +148,7 @@ export default function PublicCampaigns() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm font-semibold text-primary">Campaign gallery</p>
-              <h2 id="public-campaigns-title" className="mt-2 text-3xl font-bold tracking-tight">Support a bright idea</h2>
+              <h2 id="public-campaigns-title" className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Support a bright idea</h2>
             </div>
             <p className="text-sm font-medium text-muted-foreground">
               {campaigns.length} {campaigns.length === 1 ? 'fundraiser' : 'fundraisers'} published

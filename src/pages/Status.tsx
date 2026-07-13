@@ -83,16 +83,16 @@ export default function Status() {
 
         <div className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.35fr_0.75fr] lg:items-center">
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <div className="absolute -left-16 -top-24 h-56 w-56 rounded-full bg-primary/15 blur-3xl" />
-            <div className="absolute -right-16 bottom-0 h-64 w-64 rounded-full bg-accent/45 blur-3xl" />
+            <div className="absolute -left-16 -top-24 h-56 w-56 rounded-full bg-primary/15 blur-3xl hidden sm:block" />
+            <div className="absolute -right-16 bottom-0 h-64 w-64 rounded-full bg-accent/45 blur-3xl hidden sm:block" />
           </div>
 
           <div className="relative z-10 max-w-3xl">
             <StatusBadge status="partial" label="Answer: not fully done yet" className="mb-5" />
-            <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl">
+            <h1 className="text-balance break-words text-3xl font-bold tracking-tight sm:text-4xl">
               Is Renderr done yet?
             </h1>
-            <p className="mt-5 text-pretty text-base leading-7 text-muted-foreground sm:text-lg">
+            <p className="mt-5 text-pretty break-words text-base leading-7 text-muted-foreground sm:text-lg">
               {currentStatusAnswer}
             </p>
             <p className="mt-4 text-sm leading-6 text-muted-foreground">
@@ -135,7 +135,7 @@ export default function Status() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm font-semibold text-primary">Module-by-module snapshot</p>
-              <h2 id="module-status-title" className="mt-2 text-3xl font-bold tracking-tight">
+              <h2 id="module-status-title" className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
                 What is complete, partial, or pending?
               </h2>
             </div>

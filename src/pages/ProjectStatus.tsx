@@ -12,6 +12,7 @@ import {
   projectStatusLabels,
 } from '@/lib/projectStatus'
 import type { ProjectModuleStatus, ProjectStatusModule, ProjectStatusSummary } from '@/types/projectStatus'
+import { cardPrimary, cardInner } from '@/lib/styles'
 
 const statusTone: Record<ProjectModuleStatus, string> = {
   completed: 'border-primary/25 bg-primary/5 shadow-primary/10 hover:border-primary/40',
@@ -48,14 +49,14 @@ function StatusSummary({ summary }: { summary: ProjectStatusSummary }) {
 
   return (
     <section aria-labelledby="status-summary-title" className="grid gap-4 md:grid-cols-[1.2fr_repeat(3,0.8fr)]">
-      <Card className="overflow-hidden border-primary/20 bg-card/90 shadow-xl shadow-primary/10 backdrop-blur md:row-span-1">
-        <CardHeader className="border-b border-primary/15 bg-gradient-to-br from-primary/10 via-accent/25 to-card">
+      <Card className={`${cardPrimary} overflow-hidden md:row-span-1`}>
+        <CardHeader className="border-b border-primary/15 bg-gradient-to-br from-primary/10 via-accent/25 to-card p-6 sm:p-8">
           <CardTitle id="status-summary-title">Is it done yet?</CardTitle>
           <CardDescription>
             {summary.productionReadyPercentage}% of tracked Renderr product modules are marked production-ready.
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-6 sm:p-8">
           <div className="h-3 overflow-hidden rounded-full bg-muted" aria-hidden="true">
             <div
               className="h-full rounded-full bg-primary shadow-sm shadow-primary/30 transition-all"
@@ -69,8 +70,8 @@ function StatusSummary({ summary }: { summary: ProjectStatusSummary }) {
       </Card>
 
       {items.map((item) => (
-        <Card key={item.label} className={`rounded-3xl shadow-sm backdrop-blur transition-colors hover:border-primary/35 ${item.className}`}>
-          <CardContent className="p-5">
+        <Card key={item.label} className={`${cardPrimary} transition-colors hover:border-primary/35 ${item.className}`}>
+          <CardContent className="p-6">
             <div className="flex items-center justify-between gap-3">
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{item.label}</p>
               <StatusBadge status={item.status} size="sm" />
@@ -86,7 +87,7 @@ function StatusSummary({ summary }: { summary: ProjectStatusSummary }) {
 
 function ModuleCard({ module }: { module: ProjectStatusModule }) {
   return (
-    <article className={`rounded-3xl border p-5 shadow-sm backdrop-blur transition-colors sm:p-6 ${statusTone[module.status]}`}>
+    <article className={`${cardInner} p-6 sm:p-8 transition-colors ${statusTone[module.status]}`}>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <p className="text-sm font-semibold text-primary">{module.module}</p>
@@ -95,8 +96,8 @@ function ModuleCard({ module }: { module: ProjectStatusModule }) {
         <StatusPill status={module.status} />
       </div>
 
-      <p className="mt-4 text-sm leading-6 text-muted-foreground">{module.summary}</p>
-      <p className="mt-3 text-sm leading-6 text-muted-foreground">{module.details}</p>
+      <p className="mt-4 text-sm leading-6 text-muted-foreground text-pretty">{module.summary}</p>
+      <p className="mt-3 text-sm leading-6 text-muted-foreground text-pretty">{module.details}</p>
 
       <div className="mt-5 grid gap-4 lg:grid-cols-2">
         <div className={`rounded-2xl border p-4 ${statusPanelTone[module.status]}`}>
@@ -143,8 +144,8 @@ export default function ProjectStatus() {
 
   return (
     <AppShell maxWidthClassName="max-w-6xl" contentClassName="space-y-6" aria-label="Renderr project status">
-      <header className="overflow-hidden rounded-3xl border border-primary/20 bg-card/90 shadow-2xl shadow-primary/10 backdrop-blur">
-        <nav className="flex flex-col gap-3 border-b border-primary/20 bg-muted/20 p-5 sm:flex-row sm:items-center sm:justify-between" aria-label="Status navigation">
+      <header className={`${cardPrimary} overflow-hidden`}>
+        <nav className="flex flex-col gap-3 border-b border-primary/20 bg-muted/20 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8" aria-label="Status navigation">
           <Link to="/dashboard" className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
             <BrandMark subtitle="Product status" />
           </Link>
@@ -185,7 +186,7 @@ export default function ProjectStatus() {
       <div className="space-y-6">
         {groups.map((group) => (
           <section key={group.status} aria-labelledby={`${group.status}-modules-title`} className="space-y-4">
-            <div className="flex flex-col gap-3 rounded-3xl border border-border bg-card/75 p-5 shadow-sm backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+            <div className={`${cardPrimary} flex flex-col gap-3 p-6 sm:flex-row sm:items-center sm:justify-between`}>
               <div>
                 <div className="flex flex-wrap items-center gap-3">
                   <StatusPill status={group.status} />
@@ -193,7 +194,7 @@ export default function ProjectStatus() {
                     {group.label}
                   </h2>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{group.description}</p>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground text-pretty">{group.description}</p>
               </div>
               <p className="text-sm font-medium text-muted-foreground">
                 {group.modules.length} {group.modules.length === 1 ? 'module' : 'modules'}
@@ -207,7 +208,7 @@ export default function ProjectStatus() {
                 ))}
               </div>
             ) : (
-              <Card className="border-dashed bg-card/70">
+              <Card className={`${cardPrimary} border-dashed`}>
                 <CardContent className="p-6 text-sm text-muted-foreground">
                   No modules are currently listed in this status.
                 </CardContent>

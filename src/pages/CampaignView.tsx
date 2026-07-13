@@ -9,6 +9,7 @@ import BackNavigation from '@/components/navigation/BackNavigation'
 import CampaignStatusBadge from '@/components/campaigns/CampaignStatusBadge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { cardPrimary, cardInner } from '@/lib/styles'
 
 type RouteParams = {
   id?: string
@@ -140,7 +141,7 @@ export default function CampaignView() {
 
   return (
     <AppShell maxWidthClassName="max-w-5xl" contentClassName="space-y-6" aria-label={isPublicRoute ? 'Public campaign detail' : 'Campaign detail'}>
-      <nav className="flex flex-col gap-4 rounded-3xl border border-primary/20 bg-card/85 p-5 shadow-xl shadow-primary/10 backdrop-blur sm:flex-row sm:items-center sm:justify-between" aria-label="Campaign detail navigation">
+      <nav className={`flex flex-col gap-4 ${cardPrimary} sm:flex-row sm:items-center sm:justify-between`} aria-label="Campaign detail navigation">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <BackNavigation fallbackTo={fallbackTo} />
           <Link to={isPublicRoute ? '/fundraisers' : '/campaigns'} className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
@@ -161,23 +162,23 @@ export default function CampaignView() {
       </nav>
 
       {loading ? (
-        <Card className="border-primary/20 bg-card/90 shadow-xl shadow-primary/10 backdrop-blur" aria-busy="true">
-          <CardContent className="p-8 text-center text-sm text-muted-foreground">Loading campaign...</CardContent>
+        <Card aria-busy="true">
+          <CardContent className="p-6 text-center text-sm text-muted-foreground sm:p-8">Loading campaign...</CardContent>
         </Card>
       ) : error || !campaign ? (
-        <Card className="border-destructive/40 bg-destructive/10 shadow-sm">
-          <CardContent className="space-y-4 p-6">
+        <Card className="rounded-3xl border-destructive/40 bg-destructive/10 shadow-xl shadow-destructive/10 backdrop-blur">
+          <CardContent className="space-y-4 p-6 sm:p-8">
             <p className="font-semibold text-destructive">Campaign could not be loaded.</p>
             <p className="text-sm leading-6 text-muted-foreground">{error || 'This campaign is unavailable.'}</p>
             <Button type="button" variant="outline" className="rounded-xl bg-background/70" onClick={loadCampaign}>Try again</Button>
           </CardContent>
         </Card>
       ) : (
-        <Card className="overflow-hidden border-primary/20 bg-card/90 shadow-2xl shadow-primary/10 backdrop-blur">
+        <Card className="overflow-hidden">
           <CardHeader className="relative overflow-hidden border-b border-primary/20 bg-gradient-to-br from-primary/15 via-accent/25 to-card p-6 sm:p-8">
             <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-              <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-primary/20 blur-3xl" />
-              <div className="absolute bottom-0 left-1/3 h-44 w-44 rounded-full bg-accent/50 blur-3xl" />
+              <div className="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-primary/20 blur-3xl hidden sm:block" />
+              <div className="absolute bottom-0 left-1/3 h-44 w-44 rounded-full bg-accent/50 blur-3xl hidden sm:block" />
             </div>
 
             <div className="relative z-10 grid gap-6 lg:grid-cols-[1.3fr_0.7fr] lg:items-end">
@@ -186,8 +187,8 @@ export default function CampaignView() {
                   <CampaignStatusBadge status={getCampaignStatus(campaign)} />
                   {campaign.published_at ? <span className="text-sm font-medium text-muted-foreground">Published {formatDate(campaign.published_at)}</span> : null}
                 </div>
-                <CardTitle className="text-balance text-4xl tracking-tight sm:text-5xl">{campaign.title || 'Untitled campaign'}</CardTitle>
-                <CardDescription className="mt-4 max-w-2xl text-base leading-7">
+                <CardTitle className="text-balance break-words text-4xl font-bold tracking-tight sm:text-5xl">{campaign.title || 'Untitled campaign'}</CardTitle>
+                <CardDescription className="mt-4 max-w-2xl text-base leading-7 break-words">
                   {campaign.summary || 'This Renderr campaign is ready for a bright story.'}
                 </CardDescription>
               </div>
@@ -202,14 +203,14 @@ export default function CampaignView() {
 
           {campaign.cover_image_url ? (
             <div className="border-b border-primary/20 bg-muted/20 p-4 sm:p-6">
-              <img src={campaign.cover_image_url} alt="" className="h-72 w-full rounded-3xl border border-primary/15 object-cover shadow-lg shadow-primary/10" />
+              <img src={campaign.cover_image_url} alt="" className="w-full h-auto max-h-48 sm:max-h-72 rounded-3xl border border-primary/15 object-cover shadow-lg shadow-primary/10" />
             </div>
           ) : null}
 
           <CardContent className="space-y-6 p-6 sm:p-8">
-            <section className="rounded-3xl border border-border bg-background/70 p-5 shadow-sm" aria-labelledby="campaign-story-title">
+            <section className={cardInner} aria-labelledby="campaign-story-title">
               <h2 id="campaign-story-title" className="text-2xl font-bold tracking-tight">Campaign story</h2>
-              <p className="mt-4 whitespace-pre-line text-sm leading-7 text-muted-foreground">
+              <p className="mt-4 whitespace-pre-line break-words text-sm leading-7 text-muted-foreground">
                 {campaign.description || 'The creator has not added a full campaign story yet.'}
               </p>
             </section>
